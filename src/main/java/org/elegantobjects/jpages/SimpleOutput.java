@@ -34,33 +34,33 @@ import java.io.OutputStream;
  */
 public final class SimpleOutput implements Output {
 
-    private final String before;
+  private final String before;
 
-    SimpleOutput(final String txt) {
-        this.before = txt;
-    }
+  SimpleOutput(final String txt) {
+    this.before = txt;
+  }
 
-    @Override
-    public String toString() {
-        return this.before;
-    }
+  @Override
+  public String toString() {
+    return this.before;
+  }
 
-    @Override
-    public Output with(final String name, final String value) {
-        final StringBuilder after = new StringBuilder(this.before);
-        if (after.length() == 0) {
-            after.append("HTTP/1.1 200 OK\r\n");
-        }
-        if ("X-Body".equals(name)) {
-            after.append("\r\n").append(value);
-        } else {
-            after.append(name).append(": ").append(value).append("\r\n");
-        }
-        return new SimpleOutput(after.toString());
+  @Override
+  public Output with(final String name, final String value) {
+    final StringBuilder after = new StringBuilder(this.before);
+    if (after.length() == 0) {
+      after.append("HTTP/1.1 200 OK\r\n");
     }
+    if ("X-Body".equals(name)) {
+      after.append("\r\n").append(value);
+    } else {
+      after.append(name).append(": ").append(value).append("\r\n");
+    }
+    return new SimpleOutput(after.toString());
+  }
 
-    @Override
-    public void writeTo(final OutputStream output) throws IOException {
-        output.write(this.before.getBytes());
-    }
+  @Override
+  public void writeTo(final OutputStream output) throws IOException {
+    output.write(this.before.getBytes());
+  }
 }

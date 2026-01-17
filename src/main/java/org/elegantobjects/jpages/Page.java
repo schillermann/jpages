@@ -30,6 +30,7 @@ package org.elegantobjects.jpages;
  * @since 0.1
  */
 interface Page {
-    Page with(String key, String value);
-    Output via(Output output);
+  Page header(String key, String value);
+
+  Output output(Output output);
 }

@@ -41,56 +41,54 @@ import java.util.List;
  */
 public final class App {
 
-    private final Page page;
+  private final Page page;
 
-    public App(final Page pge) {
-        this.page = pge;
-    }
+  public App(final Page pge) {
+    this.page = pge;
+  }
 
-    public void start(final int port) throws IOException, InterruptedException {
-        final List<Thread> pool = new ArrayList<>(0);
-        try (final ServerSocket server = new ServerSocket(port)) {
-            server.setSoTimeout(1000);
-            for (int i = 0; i < 10; ++i) {
-                final Thread t = new Thread(
-                    () -> {
-                        try {
-                            while (true) {
-                                if (Thread.currentThread().isInterrupted()) {
-                                    Thread.currentThread().interrupt();
-                                    break;
-                                }
-                                try (final Socket socket = server.accept()) {
-                                    this.process(socket);
-                                } catch (final SocketTimeoutException ex) {
-                                    continue;
-                                }
-                            }
-                        } catch (IOException e) {
-                            throw new IllegalStateException(e);
-                        }
-                    }
-                );
-                pool.add(t);
-            }
-            for (int i = 0; i < pool.size(); ++i) {
-                pool.get(i).start();
-            }
-            for (int i = 0; i < pool.size(); ++i) {
-                pool.get(i).join();
-            }
-        }
+  public void start(final int port) throws IOException, InterruptedException {
+    final List<Thread> pool = new ArrayList<>(0);
+    try (final ServerSocket server = new ServerSocket(port)) {
+      server.setSoTimeout(1000);
+      for (int i = 0; i < 10; ++i) {
+        final Thread t = new Thread(
+            () -> {
+              try {
+                while (true) {
+                  if (Thread.currentThread().isInterrupted()) {
+                    Thread.currentThread().interrupt();
+                    break;
+                  }
+                  try (final Socket socket = server.accept()) {
+                    this.process(socket);
+                  } catch (final SocketTimeoutException ex) {
+                    continue;
+                  }
+                }
+              } catch (IOException e) {
+                throw new IllegalStateException(e);
+              }
+            });
+        pool.add(t);
+      }
+      for (int i = 0; i < pool.size(); ++i) {
+        pool.get(i).start();
+      }
+      for (int i = 0; i < pool.size(); ++i) {
+        pool.get(i).join();
+      }
     }
+  }
 
-    private void process(final Socket socket) throws IOException {
-        try (final InputStream input = socket.getInputStream();
-             final OutputStream output = socket.getOutputStream()) {
-            final byte[] buffer = new byte[10000];
-            final int total = input.read(buffer);
-            new Session(this.page).with(
-                new String(Arrays.copyOfRange(buffer, 0, total))
-            ).via(new SimpleOutput("")).writeTo(output);
-        }
+  private void process(final Socket socket) throws IOException {
+    try (final InputStream input = socket.getInputStream();
+        final OutputStream output = socket.getOutputStream()) {
+      final byte[] buffer = new byte[10000];
+      final int total = input.read(buffer);
+      new Session(this.page).with(
+          new String(Arrays.copyOfRange(buffer, 0, total))).output(new SimpleOutput("")).writeTo(output);
     }
+  }
 
 }

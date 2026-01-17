@@ -35,19 +35,17 @@ import org.junit.Test;
  */
 public final class TextPageTest {
 
-    @Test
-    public void testWorks() throws Exception {
-        final Page page = new PageWithType(
-            new SimplePage("Hi!"),
-            "text/html"
-        );
-        page.with("X-Path", "/user/account")
-            .with("Accept", "text/html");
-        final Output output = page.via(new SimpleOutput(""));
-        MatcherAssert.assertThat(
-            output.toString(),
-            Matchers.containsString("")
-        );
-    }
+  @Test
+  public void testWorks() throws Exception {
+    final Page page = new PageWithType(
+        new SimplePage("Hi!"),
+        "text/html");
+    page.header("X-Path", "/user/account")
+        .header("Accept", "text/html");
+    final Output output = page.output(new SimpleOutput(""));
+    MatcherAssert.assertThat(
+        output.toString(),
+        Matchers.containsString(""));
+  }
 
 }

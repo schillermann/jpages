@@ -35,24 +35,24 @@ import java.util.stream.Collectors;
  */
 public final class VerbosePage implements Page {
 
-    private final Map<String, String> args;
+  private final Map<String, String> args;
 
-    VerbosePage() {
-        this.args = new HashMap<>(0);
-    }
+  VerbosePage() {
+    this.args = new HashMap<>(0);
+  }
 
-    @Override
-    public Page with(final String key, final String value) {
-        this.args.put(key, value);
-        return this;
-    }
+  @Override
+  public Page header(final String key, final String value) {
+    this.args.put(key, value);
+    return this;
+  }
 
-    @Override
-    public Output via(final Output output) {
-        return new TextPage(
-            this.args.entrySet().stream()
-                .map(e -> e.getKey() + ": " + e.getValue())
-                .collect(Collectors.joining("\n"))
-        ).via(output);
-    }
+  @Override
+  public Output output(final Output output) {
+    return new TextPage(
+        this.args.entrySet().stream()
+            .map(e -> e.getKey() + ": " + e.getValue())
+            .collect(Collectors.joining("\n")))
+        .output(output);
+  }
 }

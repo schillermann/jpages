@@ -31,22 +31,22 @@ package org.elegantobjects.jpages;
  */
 public final class PageWithType implements Page {
 
-    private final Page origin;
+  private final Page origin;
 
-    private final String type;
+  private final String type;
 
-    PageWithType(final Page page, final String ctype) {
-        this.origin = page;
-        this.type = ctype;
-    }
+  PageWithType(final Page page, final String ctype) {
+    this.origin = page;
+    this.type = ctype;
+  }
 
-    @Override
-    public Page with(final String key, final String value) {
-        return this;
-    }
+  @Override
+  public Page header(final String key, final String value) {
+    return this;
+  }
 
-    @Override
-    public Output via(final Output output) {
-        return this.origin.via(output.with("Content-Type", this.type));
-    }
+  @Override
+  public Output output(final Output output) {
+    return this.origin.output(output.with("Content-Type", this.type));
+  }
 }

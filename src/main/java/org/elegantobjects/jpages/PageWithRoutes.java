@@ -31,31 +31,31 @@ package org.elegantobjects.jpages;
  */
 public final class PageWithRoutes implements Page {
 
-    private final String path;
+  private final String path;
 
-    private final Page right;
+  private final Page right;
 
-    private final Page wrong;
+  private final Page wrong;
 
-    PageWithRoutes(final String pth, final Page rght, final Page wrng) {
-        this.path = pth;
-        this.right = rght;
-        this.wrong = wrng;
+  PageWithRoutes(final String pth, final Page rght, final Page wrng) {
+    this.path = pth;
+    this.right = rght;
+    this.wrong = wrng;
+  }
+
+  @Override
+  public Page header(final String key, final String value) {
+    if (key.equals("X-Path")) {
+      if (value.equals(this.path)) {
+        return this.right.header(key, value);
+      }
+      return this.wrong.header(key, value);
     }
+    return this;
+  }
 
-    @Override
-    public Page with(final String key, final String value) {
-        if (key.equals("X-Path")) {
-            if (value.equals(this.path)) {
-                return this.right.with(key, value);
-            }
-            return this.wrong.with(key, value);
-        }
-        return this;
-    }
-
-    @Override
-    public Output via(final Output output) {
-        return output;
-    }
+  @Override
+  public Output output(final Output output) {
+    return output;
+  }
 }

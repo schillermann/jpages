@@ -31,21 +31,21 @@ package org.elegantobjects.jpages;
  */
 public final class SimplePage implements Page {
 
-    private final String body;
+  private final String body;
 
-    SimplePage(final String text) {
-        this.body = text;
-    }
+  SimplePage(final String text) {
+    this.body = text;
+  }
 
-    @Override
-    public Page with(final String key, final String value) {
-        return this;
-    }
+  @Override
+  public Page header(final String key, final String value) {
+    return this;
+  }
 
-    @Override
-    public Output via(final Output output) {
-        return output
-            .with("Content-Length", Integer.toString(this.body.length()))
-            .with("X-Body", this.body);
-    }
+  @Override
+  public Output output(final Output output) {
+    return output
+        .with("Content-Length", Integer.toString(this.body.length()))
+        .with("X-Body", this.body);
+  }
 }

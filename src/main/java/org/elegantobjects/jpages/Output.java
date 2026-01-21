@@ -33,6 +33,7 @@ import java.io.OutputStream;
  * @since 0.1
  */
 interface Output {
-    Output with(String name, String value);
-    void writeTo(OutputStream output) throws IOException;
+  Output extension(String name, String value);
+
+  void writeTo(OutputStream output) throws IOException;
 }

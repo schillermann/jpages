@@ -45,7 +45,7 @@ public final class SimplePage implements Page {
   @Override
   public Output output(final Output output) {
     return output
-        .with("Content-Length", Integer.toString(this.body.length()))
-        .with("X-Body", this.body);
+        .extension("Content-Length", Integer.toString(this.body.length()))
+        .extension("X-Body", this.body);
   }
 }

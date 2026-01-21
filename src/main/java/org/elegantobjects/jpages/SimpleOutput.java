@@ -46,7 +46,7 @@ public final class SimpleOutput implements Output {
   }
 
   @Override
-  public Output with(final String name, final String value) {
+  public Output extension(final String name, final String value) {
     final StringBuilder after = new StringBuilder(this.before);
     if (after.length() == 0) {
       after.append("HTTP/1.1 200 OK\r\n");

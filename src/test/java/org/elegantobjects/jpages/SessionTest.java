@@ -46,9 +46,9 @@ public final class SessionTest {
 
           @Override
           public Output output(final Output output) {
-            return output.with("Content-Type", "text/plain")
-                .with("Content-Length", "13")
-                .with("X-Body", "Hello, world!");
+            return output.extension("Content-Type", "text/plain")
+                .extension("Content-Length", "13")
+                .extension("X-Body", "Hello, world!");
           }
         });
     final Page page = session.with("GET / HTTP/1.1\r\n");

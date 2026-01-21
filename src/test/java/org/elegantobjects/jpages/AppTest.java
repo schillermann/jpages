@@ -67,7 +67,7 @@ public final class AppTest {
 
                 @Override
                 public Output output(final Output output) {
-                  return output.with("X-Body", "Not found");
+                  return output.extension("X-Body", "Not found");
                 }
               });
           try {

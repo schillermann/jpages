@@ -45,8 +45,8 @@ public final class TextPage implements Page {
   @Override
   public Output output(final Output output) {
     return output
-        .with("Content-Type", "text/plain")
-        .with("Content-Length", Integer.toString(this.body.length()))
-        .with("X-Body", this.body);
+        .extension("Content-Type", "text/plain")
+        .extension("Content-Length", Integer.toString(this.body.length()))
+        .extension("X-Body", this.body);
   }
 }

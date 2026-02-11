@@ -39,7 +39,6 @@ import org.junit.Test;
  * @since 0.1
  */
 public final class AppTest {
-
   @Test
   @Ignore
   public void testWorks() throws Exception {
@@ -50,7 +49,7 @@ public final class AppTest {
               new Page() {
                 @Override
                 public Page header(final String name, final String value) {
-                  if (!"X-Path".equals(name)) {
+                  if (!"JPages-Path".equals(name)) {
                     return this;
                   }
                   if ("/".equals(value)) {
@@ -67,7 +66,7 @@ public final class AppTest {
 
                 @Override
                 public Output output(final Output output) {
-                  return output.extension("X-Body", "Not found");
+                  return output.extension("JPages-Body", "Not found");
                 }
               });
           try {
@@ -175,5 +174,4 @@ public final class AppTest {
     thread.interrupt();
     thread.join();
   }
-
 }

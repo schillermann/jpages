@@ -46,6 +46,6 @@ public final class SimplePage implements Page {
   public Output output(final Output output) {
     return output
         .extension("Content-Length", Integer.toString(this.body.length()))
-        .extension("X-Body", this.body);
+        .extension("JPages-Body", this.body);
   }
 }

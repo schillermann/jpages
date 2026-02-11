@@ -29,7 +29,7 @@ package org.elegantobjects.jpages;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @since 0.1
  */
-interface Page {
+public interface Page {
   Page header(String key, String value);
 
   Output output(Output output);

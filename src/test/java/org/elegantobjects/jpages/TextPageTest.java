@@ -40,7 +40,7 @@ public final class TextPageTest {
     final Page page = new PageWithType(
         new SimplePage("Hi!"),
         "text/html");
-    page.header("X-Path", "/user/account")
+    page.header("Jpages-Path", "/user/account")
         .header("Accept", "text/html");
     final Output output = page.output(new SimpleOutput(""));
     MatcherAssert.assertThat(

@@ -22,15 +22,15 @@ Thread thread = new Thread(
     App app = new App(
       new Page() {
         @Override
-        public Page with(String name, String value) {
-            if (value.equals("/")) {
-              return new TextPage("Hello, world!");
-            }
-            return new TextPage("Not found!");
+        public Page header(final String key, final String value) {
+          if ("JPages-Path".equals(key) && "/".equals(value)) {
+            return new TextPage("Hello, world!");
+          }
+          return this;
         }
         @Override
-        public Output via(Output output) {
-          return output.with("X-Body", "Not found");
+        public Output output(final Output output) {
+          return output.extension("JPages-Body", "Not found!");
         }
       }
     );

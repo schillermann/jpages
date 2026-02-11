@@ -48,7 +48,7 @@ public final class SessionTest {
           public Output output(final Output output) {
             return output.extension("Content-Type", "text/plain")
                 .extension("Content-Length", "13")
-                .extension("X-Body", "Hello, world!");
+                .extension("JPages-Body", "Hello, world!");
           }
         });
     final Page page = session.with("GET / HTTP/1.1\r\n");

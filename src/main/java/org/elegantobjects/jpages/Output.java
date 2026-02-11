@@ -32,7 +32,7 @@ import java.io.OutputStream;
  * @author Yegor Bugayenko (yegor256@gmail.com)
  * @since 0.1
  */
-interface Output {
+public interface Output {
   Output extension(String name, String value);
 
   void writeTo(OutputStream output) throws IOException;

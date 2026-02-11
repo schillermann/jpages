@@ -45,7 +45,7 @@ public final class PageWithRoutes implements Page {
 
   @Override
   public Page header(final String key, final String value) {
-    if (key.equals("X-Path")) {
+    if (key.equals("JPages-Path")) {
       if (value.equals(this.path)) {
         return this.right.header(key, value);
       }

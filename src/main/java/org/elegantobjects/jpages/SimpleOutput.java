@@ -36,7 +36,7 @@ public final class SimpleOutput implements Output {
 
   private final String before;
 
-  SimpleOutput(final String txt) {
+  public SimpleOutput(final String txt) {
     this.before = txt;
   }
 
@@ -51,7 +51,7 @@ public final class SimpleOutput implements Output {
     if (after.length() == 0) {
       after.append("HTTP/1.1 200 OK\r\n");
     }
-    if ("X-Body".equals(name)) {
+    if ("JPages-Body".equals(name)) {
       after.append("\r\n").append(value);
     } else {
       after.append(name).append(": ").append(value).append("\r\n");

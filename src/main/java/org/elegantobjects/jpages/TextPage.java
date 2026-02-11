@@ -47,6 +47,6 @@ public final class TextPage implements Page {
     return output
         .extension("Content-Type", "text/plain")
         .extension("Content-Length", Integer.toString(this.body.length()))
-        .extension("X-Body", this.body);
+        .extension("JPages-Body", this.body);
   }
 }

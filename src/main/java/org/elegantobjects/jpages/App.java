@@ -24,14 +24,15 @@
 package org.elegantobjects.jpages;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.io.OutputStream;
+import org.elegantobjects.jpages.messages.HttpRequest;
+import org.elegantobjects.jpages.messages.Request;
+import org.elegantobjects.jpages.messages.HttpResponse;
 
 /**
  * The app.
@@ -49,6 +50,7 @@ public final class App {
 
   public void start(final int port) throws IOException, InterruptedException {
     final List<Thread> pool = new ArrayList<>(0);
+    System.out.printf("Starting server on port %d...%n", port);
     try (final ServerSocket server = new ServerSocket(port)) {
       server.setSoTimeout(1000);
       for (int i = 0; i < 10; ++i) {
@@ -61,7 +63,13 @@ public final class App {
                     break;
                   }
                   try (final Socket socket = server.accept()) {
-                    this.process(socket);
+                    try (final Request request = new HttpRequest(socket);
+                        final OutputStream output = socket.getOutputStream()) {
+                      new HttpResponse(request)
+                          .target(page)
+                          .output(new SimpleOutput(""))
+                          .writeTo(output);
+                    }
                   } catch (final SocketTimeoutException ex) {
                     continue;
                   }
@@ -75,20 +83,10 @@ public final class App {
       for (int i = 0; i < pool.size(); ++i) {
         pool.get(i).start();
       }
+      System.out.printf("Server started on port %d.%n", port);
       for (int i = 0; i < pool.size(); ++i) {
         pool.get(i).join();
       }
     }
   }
-
-  private void process(final Socket socket) throws IOException {
-    try (final InputStream input = socket.getInputStream();
-        final OutputStream output = socket.getOutputStream()) {
-      final byte[] buffer = new byte[10000];
-      final int total = input.read(buffer);
-      new Session(this.page).with(
-          new String(Arrays.copyOfRange(buffer, 0, total))).output(new SimpleOutput("")).writeTo(output);
-    }
-  }
-
 }

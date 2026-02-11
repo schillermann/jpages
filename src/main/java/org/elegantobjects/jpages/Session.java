@@ -48,11 +48,11 @@ public class Session {
       pairs.put(parts[0].trim(), parts[1].trim());
     }
     final String[] parts = lines[0].split(" ");
-    pairs.put("X-Method", parts[0]);
+    pairs.put("JPages-Method", parts[0]);
     final String[] qparts = parts[1].split("\\?", 2);
-    pairs.put("X-Path", qparts[0]);
-    pairs.put("X-Query", qparts.length < 2 ? "" : qparts[1]);
-    pairs.put("X-Protocol", parts[2]);
+    pairs.put("JPages-Path", qparts[0]);
+    pairs.put("JPages-Query", qparts.length < 2 ? "" : qparts[1]);
+    pairs.put("JPages-Protocol", parts[2]);
     Page target = this.page;
     for (final Map.Entry<String, String> pair : pairs.entrySet()) {
       target = target.header(pair.getKey(), pair.getValue());
